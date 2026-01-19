@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="pl" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marek Ćwioro - Fotografia</title>
+    <meta
+      name="description"
+      content="Profesjonalny fotograf z Krakowa. Fotografia ślubna, motoryzacyjna, portretowa i eventowa. Sprawdź portfolio i skontaktuj się."
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://marekcwioro.com/" />
+    <meta property="og:title" content="Marek Ćwioro - Fotografia Kraków" />
+    <meta
+      property="og:description"
+      content="Profesjonalna fotografia ślubna, motoryzacyjna i portretowa w Krakowie. Zobacz moje portfolio."
+    />
+    <meta
+      property="og:image"
+      content="https://marekcwioro.com/assets/social-share.jpg"
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://marekcwioro.com" />
+    <meta name="twitter:title" content="Marek Ćwioro - Fotografia Kraków" />
+    <meta
+      name="twitter:description"
+      content="Profesjonalna fotografia ślubna, motoryzacyjna i portretowa w Krakowie. Zobacz moje portfolio."
+    />
+    <meta
+      name="twitter:image"
+      content="https://marekcwioro.com/assets/social-share.jpg"
+    />
+    <meta name="author" content="Marek Ćwioro" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="canonical" href="https://marekcwioro.com/" />
+    <meta name="robots" content="index, follow" />
+    <link rel="icon" href="./assets/favicon.png" type="image/png" />
+    <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon" />
+    <link
+      rel="preload"
+      as="image"
+      href="./assets/img/automotive/2025-10-01-Ferrari-Roma/DSC01365.jpg"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Photographer",
+        "name": "Marek Foto",
+        "image": "https://marekcwioro.com/assets/logo.svg",
+        "url": "https://marekcwioro.com/",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kraków",
+          "addressCountry": "PL"
+        },
+        "areaServed": {
+          "@type": "City",
+          "name": "Kraków"
+        },
+        "priceRange": "$$",
+        "sameAs": [
+          "https://www.instagram.com/marek_cwioro/",
+          "https://www.facebook.com/profile.php?id=100087325923279"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <main>
+      <div class="dec"></div>
+      <header class="header">
+        <div class="header__container">
+          <!-- Logo -->
+          <a href="#home-section" class="header__logo">
+            <img src="./assets/logo.svg" alt="Marek Foto – fotograf" />
+          </a>
+
+          <!-- Hamburger -->
+          <button
+            class="header__toggle"
+            aria-label="Otwórz menu"
+            aria-expanded="false"
+            aria-controls="main-navigation"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <!-- Navigation -->
+          <nav
+            class="header__nav"
+            id="main-navigation"
+            role="navigation"
+            aria-label="Główna nawigacja"
+          >
+            <ul class="header__menu">
+              <li><a href="#home-section">Strona główna</a></li>
+              <li><a href="#specializations-section">Specjalizacje</a></li>
+              <li><a href="#realizations-section">Realizacje</a></li>
+              <li><a href="#contact-section">Kontakt</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <section class="hero-section" id="home-section">
+        <div class="container hero-container">
+          <div class="hero-content" id="hero-text-container"></div>
+          <div class="hero-gallery">
+            <div class="splide" id="ferrari-gallery">
+              <div class="splide__track">
+                <ul class="splide__list" id="hero-slider-list"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="container" id="specializations-section">
+        <h2 class="section-title">Specjalizacje fotograficzne</h2>
+        <div class="categories-grid" id="specializations-grid"></div>
+      </section>
+
+      <section class="container" id="realizations-section">
+        <h2 class="section-title">Realizacje</h2>
+        <p class="section-subtitle">
+          Zobacz wybrane projekty z mojego portfolio. Kliknij w kategorię, aby
+          filtrować projekty.
+        </p>
+
+        <div class="portfolio-filter">
+          <button class="filter-btn active" data-filter="all">Wszystkie</button>
+          <button class="filter-btn" data-filter="automotive">
+            Motoryzacja
+          </button>
+          <button class="filter-btn" data-filter="wedding">Śluby</button>
+          <!-- <button class="filter-btn" data-filter="realestate">
+            Nieruchomości
+          </button> -->
+          <button class="filter-btn" data-filter="portrait">Portrety</button>
+          <!-- <button class="filter-btn" data-filter="nature">Natura</button>
+          <button class="filter-btn" data-filter="events">Wydarzenia</button> -->
+        </div>
+
+        <div id="project-gallery-view" style="display: none">
+          <button id="back-to-projects" class="back-btn">
+            ← Wróć do realizacji
+          </button>
+
+          <h2 id="project-title"></h2>
+          <p id="project-description"></p>
+
+          <div class="masonry" id="project-gallery"></div>
+        </div>
+
+        <div class="portfolio-grid" id="portfolio-grid"></div>
+
+        <div id="gallery-modal" class="modal" style="display: none">
+          <div class="modal-content">
+            <span class="close-modal" id="close-gallery">&times;</span>
+
+            <h2 id="modal-title"></h2>
+            <p id="modal-description"></p>
+
+            <div class="masonry" id="modal-gallery"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="container contact-container" id="contact-section">
+        <h2 class="section-title">Opowiedz mi o swojej wizji</h2>
+        <p class="section-subtitle">
+          Każda historia zasługuje na wyjątkowe uchwycenie. Skontaktuj się ze
+          mną i opowiedz o swojej wizji - czy to sesja portretowa, ślubna,
+          rodzinna czy komercyjna. Razem stworzymy zdjęcia, które będą dla
+          Ciebie wyjątkowe.
+        </p>
+        <section class="categories-grid">
+          <div class="contact-card instagram">
+            <div class="icon-wrapper"><i class="ph ph-instagram-logo"></i></div>
+            <h3 class="contact-title">Instagram</h3>
+            <a
+              href="https://www.instagram.com/marek_cwioro/"
+              class="contact-info contact-btn"
+              target="_blank"
+              >@marek_cwioro</a
+            >
+          </div>
+          <div class="contact-card facebook">
+            <div class="icon-wrapper"><i class="ph ph-facebook-logo"></i></div>
+            <h3 class="contact-title">Facebook</h3>
+            <a
+              href="https://www.facebook.com/profile.php?id=100087325923279"
+              class="contact-info contact-btn"
+              target="_blank"
+              >marek-foto</a
+            >
+          </div>
+          <div class="contact-card email">
+            <div class="icon-wrapper"><i class="ph ph-envelope"></i></div>
+            <h3 class="contact-title">Email</h3>
+            <a
+              href="mailto:marekfoto02@gmail.com"
+              class="contact-info contact-btn"
+              >marekfoto02@gmail.com</a
+            >
+          </div>
+        </section>
+      </section>
+      <footer class="footer">
+        <div class="container footer-content">
+          <p>
+            &copy; <span id="current-year">2026</span> Marek-Foto. Wszelkie
+            prawa zastrzeżone.
+          </p>
+        </div>
+      </footer>
+    </main>
+
+    <div id="cookie-banner" class="cookie-banner">
+      <p>
+        Ta strona korzysta z plików cookies w celu zapewnienia najlepszej
+        jakości usług. <a href="#">Dowiedz się więcej</a>.
+      </p>
+      <button
+        id="accept-cookies"
+        class="category-btn"
+        style="padding: 8px 20px; font-size: 12px"
+      >
+        Akceptuję
+      </button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
+    <script src="./scripts/core.js" defer></script>
+    <script src="./scripts/main.js" defer></script>
+  </body>
+</html>

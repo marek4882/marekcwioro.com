@@ -1,0 +1,23 @@
+[
+  {
+    "id": "automotive",
+    "title": "Motoryzacja",
+    "description": "Profesjonalne sesje zdjęciowe pojazdów podkreślające ich dynamikę i charakter.",
+    "image": "./assets/img/automotive/2025-06-29-Ford-GT-1/Ford-GT-1_Cover.webp",
+    "btnText": "Zobacz realizacje"
+  },
+   {
+    "id": "wedding",
+    "title": "Śluby",
+    "description": "Uwieczniam najpiękniejsze momenty z Waszego wyjątkowego dnia w niepowtarzalny sposób.",
+    "image": "./assets/img/wedding/DSC05316.webp",
+    "btnText": "Zobacz realizacje"
+  },
+   {
+    "id": "portrait",
+    "title": "Portrety",
+    "description": "Piękne portrety oddające osobowość i charakter fotografowanej osoby.",
+    "image": "./assets/img/portrait/DSC03686.webp",
+    "btnText": "Zobacz realizacje"
+  }
+]

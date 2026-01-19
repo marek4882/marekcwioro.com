@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pl" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>404 - Nie znaleziono strony | Marek Ćwioro - Fotografia</title>
+
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" href="./assets/favicon.png" type="image/png" />
+    <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+
+  <body>
+    <main class="error-page-wrapper">
+      <div class="dec"></div>
+
+      <header class="header">
+        <div class="header__container">
+          <a href="index.html" class="header__logo">
+            <img src="./assets/logo.svg" alt="Marek Foto – fotograf" />
+          </a>
+          <button class="header__toggle" aria-label="Otwórz menu">
+            <span></span><span></span><span></span>
+          </button>
+          <nav class="header__nav" id="main-navigation">
+            <ul class="header__menu">
+              <li><a href="index.html#home-section">Strona główna</a></li>
+              <li>
+                <a href="index.html#specializations-section">Specjalizacje</a>
+              </li>
+              <li><a href="index.html#realizations-section">Realizacje</a></li>
+              <li><a href="index.html#contact-section">Kontakt</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <section class="error-container">
+        <div class="error-content">
+          <h1 class="error-code">404</h1>
+          <h2 class="error-title">Ten kadr gdzieś zaginął</h2>
+          <p class="error-description">
+            Wygląda na to, że strona, której szukasz, jest nieostra lub została
+            usunięta. Wróć do portfolio, by zobaczyć to, co najlepsze.
+          </p>
+
+          <div class="error-actions">
+            <a href="index.html" class="btn-primary">Wróć na stronę główną</a>
+            <a href="index.html#contact-section" class="btn-secondary"
+              >Zgłoś błąd</a
+            >
+          </div>
+        </div>
+
+        <div class="error-visual">
+          <i class="ph ph-camera-slash"></i>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="container footer-content">
+          <p>&copy; <span id="current-year">2026</span> Marek-Foto.</p>
+        </div>
+      </footer>
+    </main>
+
+    <script src="./scripts/core.js" defer></script>
+  </body>
+</html>

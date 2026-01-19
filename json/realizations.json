@@ -1,0 +1,67 @@
+[
+  
+  
+  {
+    "id": "automotive-ford-gt-1",
+    "category": "automotive",
+    "title": "Ford GT 1",
+    "shortDescription": "Nowoczesny samochód wyścigowy Ford GT z turbodoładowaniem, agresywną aerodynamiką i zawieszeniem H&R.",
+    "fullDescription": "Nowoczesny samochód wyścigowy Ford GT z turbodoładowaniem, agresywną aerodynamiką i zawieszeniem H&R. Ten samochód wyścigowy kontynuuje wyścigowe dziedzictwo Forda, oferując nowoczesną inżynierię i osiągi zorientowane na tor.",
+    "basePath": "./assets/img/automotive/2025-06-29-Ford-GT-1/",
+    "mainImage": "Ford-GT-1_Cover.webp",
+    "images": [
+      "Ford-GT-1_Social.webp",
+      "Ford-GT-1_Social_II.webp",
+      "Ford-GT-1_Social_III.webp",
+      "Ford-GT-1_Social_IV.webp",
+      "Ford-GT-1_Social_V.webp",
+      "Ford-GT-1_Social_VI.webp",
+      "Ford-GT-1_Social_VII.webp",
+      "Ford-GT-1_Social_VIII.webp"
+     
+      
+    ],
+    "date": "2025-06-29",
+    "location": "Wrocław",
+    "tags": ["ford", "supersamochód", "motoryzacja", "dynamika", "luksus"]
+  },
+  {
+    "id": "weeding-1",
+    "category": "wedding",
+    "title": "Dominika & Damian",
+    "shortDescription": "Elegancki plener ślubny na jachcie, malowniczy zachód słońca nad Wisłą i panorama Krakowa.",
+    "basePath": "./assets/img/wedding/",
+    "mainImage": "DSC05197.webp",
+    "images": [
+      "DSC05197.webp",
+      "DSC05316.webp",
+      "DSC05327.webp",
+      "DSC05368.webp",
+      "DSC05472.webp",
+      "DSC05567.webp"
+    ],
+    "date": "2025-06-29",
+    "location": "Kraków",
+    "tags": ["sesja poślubna", "para młoda", "ślub", "miłość"]
+  },
+  {
+    "id": "portrait-1",
+    "category": "portrait",
+    "title": "EXPO FotoPlus",
+    "shortDescription": "Zestaw artystycznych portretów studyjnych o zróżnicowanej kolorystyce i klimacie z wydarzenia FotoPlus",
+    "basePath": "./assets/img/portrait/",
+    "mainImage": "DSC03686.webp",
+    "images": [
+      "DSC03673.webp",
+      "DSC03686.webp",
+      "DSC04806.webp",
+      "DSC04884.webp"
+    ],
+    "date": "2025-06-29",
+    "location": "Kraków",
+    "tags": ["portrety", "modelki", "expo", "fotoplus", "kraków"]
+  }
+]
+  
+ 
+ 

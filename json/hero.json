@@ -1,0 +1,26 @@
+{
+  "title": "Fotografuje momenty,<br>które trwają wiecznie",
+  "description": "Tworzę historie zapisane światłem, dbając o każdy detal Twojej wizji. Profesjonalna fotografia motoryzacyjna, eventowa i portretowa. ",
+  "ctaText": "Zobacz moje prace",
+  "ctaLink": "#realizations-section",
+  "sliderImages": [
+    {
+      "src": "./assets/img/automotive/2025-06-29-Ford-GT-1/Ford-GT-1_Cover.webp",
+      "alt": "Ford GT 1",
+      "caption": "Ford GT 1",
+      "date": "29.06.2025"
+    },
+    {
+       "src": "./assets/img/automotive/Ultrace/ultrace.webp",
+       "alt": "Chevrolet Corvette C8",
+       "caption": "Chevrolet Corvette C8",
+       "date": "29.06.2025"
+     },
+    {
+      "src": "./assets/img/automotive/Speedland/speedland.webp",
+      "alt": "Nissan GTR",
+      "caption": "Nissan GTR",
+      "date": "10.07.2025"
+    }
+  ]
+}
