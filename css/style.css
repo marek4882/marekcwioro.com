@@ -1,3 +1,6 @@
+:root {
+  --header-h: 100px;
+}
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;
@@ -27,6 +30,12 @@ html {
   scroll-behavior: smooth;
 }
 body {
+  font-family:
+    "Roboto",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   background-color: white;
   color: #333;
 }
@@ -68,7 +77,9 @@ section,
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .category-card:hover {
@@ -379,7 +390,9 @@ section,
   width: 100%;
   max-width: 400px;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   margin: 0; /* Remove default figure margin */
 }
 
@@ -394,6 +407,7 @@ section,
 }
 
 .gallery-image {
+  aspect-ratio: 2 /3;
   width: 100%;
   min-height: 580px;
   object-fit: cover;
@@ -405,9 +419,6 @@ section,
   transform: scale(1.05);
 }
 
-.gallery-image {
-  aspect-ratio: 2 /3;
-}
 .portfolio-image {
   aspect-ratio: 3 /2;
 }
@@ -448,7 +459,7 @@ section,
 
 /* Contact Section */
 .contact-container {
-  border-radius: 15px;
+  border-radius: 8px;
   box-shadow: 0px 4px rgba(128, 128, 128, 0.247);
   margin-bottom: 3rem;
   transition: all 0.5s ease;
@@ -569,7 +580,9 @@ ul {
   width: 24px;
   height: 2px;
   background: #111;
-  transition: transform 0.35s ease, opacity 0.25s ease;
+  transition:
+    transform 0.35s ease,
+    opacity 0.25s ease;
 }
 
 /* X animation */
@@ -677,20 +690,16 @@ ul {
    HERO SECTION
 =============================== */
 .hero-section {
-  position: relative;
-  /* Fioletowy gradient zbliżony do zdjęcia referencyjnego */
-
-  overflow: hidden;
-  min-height: 90vh; /* Sekcja zajmie większość ekranu */
+  min-height: calc(100vh - var(--header-h));
   display: flex;
-  align-items: center; /* Centrowanie w pionie */
+  align-items: center;
+  overflow: hidden;
 }
 
 /* Kontener główny - Zmiana na Flex Column dla układu pionowego */
 .hero-container {
   display: flex;
   flex-direction: column; /* Układamy tekst NAD sliderem */
-  justify-content: center;
   align-items: center;
   gap: 4rem; /* Odstęp między tekstem a galerią */
   width: 100%;
@@ -765,14 +774,13 @@ ul {
 .hero-gallery {
   width: 100%;
   max-width: 1200px;
-  /* Efekt wyłaniania się z dołu (opcjonalny, pasuje do stylu modern) */
   mask-image: linear-gradient(to bottom, transparent, black 5%, black 100%);
 }
 
 /* Stylizacja kart w sliderze */
 .gallery-item {
   position: relative;
-  border-radius: 24px; /* Mocno zaokrąglone rogi jak w przykładzie */
+  border-radius: 8px; /* Mocno zaokrąglone rogi jak w przykładzie */
   overflow: hidden;
   transition: transform 0.3s ease;
   background: #2b235a; /* Tło karty zanim załaduje się zdjęcie */
@@ -991,7 +999,9 @@ ul {
   margin-bottom: 1.5rem;
   border-radius: 6px;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .masonry img:hover {
@@ -1208,7 +1218,9 @@ ul {
 .animate {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity0.8s ease, transform0.8s ease;
+  transition:
+    opacity0.8s ease,
+    transform0.8s ease;
 }
 
 .animate.in-view {
