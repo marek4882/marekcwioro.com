@@ -38,27 +38,29 @@
     <meta name="robots" content="index, follow" />
     <link rel="icon" href="./assets/favicon.png" type="image/png" />
     <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon" />
-    <link
-      rel="preload"
-      as="image"
-      href="./assets/img/automotive/2025-10-01-Ferrari-Roma/DSC01365.jpg"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css"
-    />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
+
     <link
       rel="stylesheet"
       type="text/css"
       href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
     />
-    <link rel="stylesheet" href="./css/style.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css"
+    />
+
+    <link
+      rel="preload"
+      href="./css/style.css"
+      as="style"
+      onload="this.rel = 'stylesheet'"
+    />
+    <noscript><link rel="stylesheet" href="./css/style.css" /></noscript>
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -126,7 +128,7 @@
         <div class="container hero-container">
           <div class="hero-content" id="hero-text-container"></div>
           <div class="hero-gallery">
-            <div class="splide" id="ferrari-gallery">
+            <div class="splide" id="gallery">
               <div class="splide__track">
                 <ul class="splide__list" id="hero-slider-list"></ul>
               </div>
