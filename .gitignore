@@ -1,0 +1,17 @@
+# --- Node.js (To najważniejsze!) ---
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# --- Systemowe (Śmieci z Windowsa i Maca) ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# --- Edytory kodu (Ustawienia prywatne VS Code) ---
+.vscode/
+.idea/
+
+# --- Zmienne środowiskowe (Hasła) ---
+.env

@@ -1,6 +1,6 @@
 /* ===============================
-   GLOBAL CONFIG & STATE
-=============================== */
+    GLOBAL CONFIG & STATE
+  =============================== */
 let heroSplideInstance = null;
 
 const CONFIG = {
@@ -49,8 +49,8 @@ appState.expandedDescriptions = new Set();
 appState.autoCloseDescriptions = true;
 
 /* ===============================
-   INIT APP
-=============================== */
+    INIT APP
+  =============================== */
 document.addEventListener("DOMContentLoaded", initApp);
 
 function isMobile() {
@@ -91,8 +91,8 @@ async function initApp() {
 }
 
 /* ===============================
-   DATA FETCHING
-=============================== */
+    DATA FETCHING
+  =============================== */
 async function fetchData(url) {
   const response = await fetch(url);
   if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -100,12 +100,12 @@ async function fetchData(url) {
 }
 
 /* ===============================
-   RENDERING FUNCTIONS
-=============================== */
+    RENDERING FUNCTIONS
+  =============================== */
 
 // NOWA FUNKCJA: Renderowanie Sekcji Głównej
 function renderHero(data) {
-  // A. Renderowanie Tekstu (H1, Opis, Button)
+  // A. Teksty (bez zmian)
   if (CONFIG.dom.heroTextContainer) {
     CONFIG.dom.heroTextContainer.innerHTML = `
       <h1 class="hero-title animate">${data.title}</h1>
@@ -114,25 +114,26 @@ function renderHero(data) {
     `;
   }
 
-  // B. Renderowanie Slidera
+  // B. Slider - ZMIANY TUTAJ
   if (CONFIG.dom.heroSliderList) {
     const slidesHTML = data.sliderImages
       .map((img, index) => {
-        // Sprawdzamy, czy to pierwszy slajd (index 0)
         const isFirst = index === 0;
-
-        // Logika atrybutów dla wydajności:
-        // 1. fetchpriority="high" tylko dla pierwszego, reszta auto
-        // 2. loading="eager" dla pierwszego, reszta "lazy"
         const priorityAttr = isFirst ? 'fetchpriority="high"' : "";
         const loadingAttr = isFirst ? 'loading="eager"' : 'loading="lazy"';
+
+        // Generujemy srcset na podstawie src z JSONa
+        // Zakładam, że img.src to np. "./assets/.../Obraz.webp"
+        const srcSet = getSrcSet(img.src);
 
         return `
       <li class="splide__slide">
         <figure class="gallery-item">
           <div class="gallery-image-container">
             <img 
-              src="${img.src}" 
+              src="${img.src.replace(".webp", "-lg.webp")}" 
+              srcset="${srcSet}"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1920px"
               alt="${img.alt}" 
               class="gallery-image"
               width="1365" 
@@ -152,12 +153,9 @@ function renderHero(data) {
       .join("");
 
     CONFIG.dom.heroSliderList.innerHTML = slidesHTML;
-
-    // C. Uruchomienie Splide
     initHeroSlider();
   }
 }
-
 // Renderowanie sekcji Specjalizacji (Górna)
 function renderSpecializations(data) {
   const container = CONFIG.dom.specializationsGrid;
@@ -166,19 +164,19 @@ function renderSpecializations(data) {
   container.innerHTML = data
     .map(
       (item) => `
-    <div class="category-card">
-      <div class="category-image">
-        <img src="${item.image}" alt="${item.title}" loading="lazy" />
+      <div class="category-card">
+        <div class="category-image">
+          <img src="${item.image}" alt="${item.title}" loading="lazy" />
+        </div>
+        <div class="category-content">
+          <h3 class="category-title">${item.title}</h3>
+          <p class="category-description">${item.description}</p>
+          <button class="category-btn" data-category="${item.id}">
+            ${item.btnText || "Wybierz"}
+          </button>
+        </div>
       </div>
-      <div class="category-content">
-        <h3 class="category-title">${item.title}</h3>
-        <p class="category-description">${item.description}</p>
-        <button class="category-btn" data-category="${item.id}">
-          ${item.btnText || "Wybierz"}
-        </button>
-      </div>
-    </div>
-  `,
+    `,
     )
     .join("");
 }
@@ -207,28 +205,34 @@ function renderPortfolio(projects, filter = "all") {
     item.className = "portfolio-item animate";
     item.dataset.category = project.category;
 
+    // ... wewnątrz pętli filteredProjects.forEach ...
     const mainImgSrc = project.basePath + project.mainImage;
+    const srcSet = getSrcSet(project.basePath, project.mainImage);
+
+    // sizes: Na mobile (do 768px) obraz ma 90-100% szerokości
+    // Na desktopie (powyżej) obraz ma ok. 33% szerokości kontenera
+    const sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw";
 
     item.innerHTML = `
   <div class="portfolio-image">
-    <img src="${mainImgSrc}" alt="${project.title}" loading="lazy">
+    <img 
+        src="${mainImgSrc.replace(".webp", "-lg.webp")}"
+        srcset="${srcSet}"
+        sizes="${sizes}"
+        alt="${project.title}" 
+        loading="lazy"
+        width="800" height="600" 
+    >
   </div>
   <div class="portfolio-content">
-    <div class="portfolio-category">${getCategoryName(project.category)}</div>
+     <div class="portfolio-category">${getCategoryName(project.category)}</div>
     <h3 class="portfolio-title">${project.title}</h3>
 
     <div class="portfolio-description-container">
-      <p class="portfolio-description clamp" id="desc-${
-        project.id
-      }" data-full-text="${project.shortDescription}">
+      <p class="portfolio-description clamp" id="desc-${project.id}" data-full-text="${project.shortDescription}">
         ${project.shortDescription}
       </p>
-      <button 
-        class="desc-toggle" 
-        hidden
-        aria-expanded="false"
-        aria-controls="desc-${project.id}"
-      >
+      <button class="desc-toggle" hidden aria-expanded="false" aria-controls="desc-${project.id}">
         Rozwiń opis
       </button>
     </div>
@@ -309,8 +313,8 @@ function handleCategoryFilter(category) {
 }
 
 /* ===============================
-   LOGIC & EVENTS
-=============================== */
+    LOGIC & EVENTS
+  =============================== */
 
 function setupEventListeners() {
   // 1. Kliknięcia w Portfolio (Otwieranie projektu)
@@ -401,22 +405,28 @@ function openProjectGallery(project) {
   CONFIG.dom.projectTitle.textContent = project.title;
   CONFIG.dom.galleryContainer.innerHTML = "";
 
-  // --- ZMIANA 1: Tworzymy tablicę PEŁNYCH ścieżek dla wszystkich zdjęć ---
-  // Łączymy folder (basePath) z nazwą pliku
-  const fullImages = project.images.map(
-    (fileName) => project.basePath + fileName,
-  );
+  // 1. Tablica do Lightboxa - używamy wersji LARGE (-lg.webp) dla jakości
+  const lightboxImages = project.images.map((fileName) => {
+    const cleanName = fileName.replace(/\.(webp|jpg|png|jpeg)$/i, "");
+    return `${project.basePath}${cleanName}-lg.webp`;
+  });
 
-  // --- ZMIANA 2: Iterujemy po nowych, pełnych ścieżkach ---
-  fullImages.forEach((src, index) => {
+  project.images.forEach((fileName, index) => {
+    // 2. Miniatury na stronie - responsywne
     const img = document.createElement("img");
-    img.src = src; // Tu już jest pełna ścieżka
+    // Src fallback
+    img.src = (project.basePath + fileName).replace(".webp", "-lg.webp");
+    // Srcset dla wydajności
+    img.srcset = getSrcSet(project.basePath, fileName);
+    // Sizes: Galeria to pewnie siatka, np. 3 kolumny
+    img.sizes = "(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw";
+
     img.alt = `${project.title} - zdjęcie ${index + 1}`;
     img.className = "gallery-detail-image";
     img.loading = "lazy";
 
-    // Kliknięcie otwiera lightbox z przekazaniem POPRAWNEJ tablicy fullImages
-    img.addEventListener("click", () => openLightbox(index, fullImages));
+    // Kliknięcie otwiera lightbox z wersjami -lg
+    img.addEventListener("click", () => openLightbox(index, lightboxImages));
 
     CONFIG.dom.galleryContainer.appendChild(img);
   });
@@ -451,24 +461,24 @@ function openLightbox(startIndex, images) {
   const rightIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
 
   lb.innerHTML = `
-  <button class="lb-btn lb-close" aria-label="Zamknij galerię">
-    ${closeIcon}
-  </button>
-
-  <div class="lb-counter" aria-live="polite"></div>
-
-  <div class="lightbox-content">
-    <button class="lb-btn lb-prev" aria-label="Poprzednie zdjęcie">
-      ${leftIcon}
+    <button class="lb-btn lb-close" aria-label="Zamknij galerię">
+      ${closeIcon}
     </button>
 
-    <img src="${images[currentIndex]}" alt="Powiększone zdjęcie">
+    <div class="lb-counter" aria-live="polite"></div>
 
-    <button class="lb-btn lb-next" aria-label="Następne zdjęcie">
-      ${rightIcon}
-    </button>
-  </div>
-`;
+    <div class="lightbox-content">
+      <button class="lb-btn lb-prev" aria-label="Poprzednie zdjęcie">
+        ${leftIcon}
+      </button>
+
+      <img src="${images[currentIndex]}" alt="Powiększone zdjęcie">
+
+      <button class="lb-btn lb-next" aria-label="Następne zdjęcie">
+        ${rightIcon}
+      </button>
+    </div>
+  `;
 
   document.body.appendChild(lb);
 
@@ -535,8 +545,8 @@ function openLightbox(startIndex, images) {
   updateCounter();
 
   /* =========================================
-     8. NOWOŚĆ: Obsługa gestów dotykowych (SWIPE)
-     ========================================= */
+      8. NOWOŚĆ: Obsługa gestów dotykowych (SWIPE)
+      ========================================= */
   let touchStartX = 0;
   let touchEndX = 0;
   const minSwipeDistance = 50; // Minimalna odległość w px, żeby uznać za swipe
@@ -577,8 +587,8 @@ function openLightbox(startIndex, images) {
 }
 
 /* ===============================
-   UTILS & UI (Slider, Animacje, Cookie)
-=============================== */
+    UTILS & UI (Slider, Animacje, Cookie)
+  =============================== */
 async function initHeroSlider() {
   const splideEl = document.querySelector("#gallery");
   if (!splideEl) return;
@@ -668,4 +678,25 @@ function initScrollSpy() {
   );
 
   sections.forEach((section) => spyObserver.observe(section));
+}
+
+/**
+ * Generuje string srcset dla plików WebP wygenerowanych przez skrypt
+ * @param {string} basePath - np. "./assets/img/auto/"
+ * @param {string} fileName - np. "foto.webp" (lub pełna ścieżka jeśli brak basePath)
+ * @returns {string} - string do atrybutu srcset
+ */
+function getSrcSet(pathStr, fileName = "") {
+  // Obsługa przypadku, gdy podano pełną ścieżkę w pierwszym argumencie (dla Hero)
+  let fullPath = fileName ? pathStr + fileName : pathStr;
+
+  // Usuwamy rozszerzenie .webp (i ewentualnie inne)
+  const cleanPath = fullPath.replace(/\.(webp|jpg|png|jpeg)$/i, "");
+
+  return `
+        ${cleanPath}-xs.webp 480w,
+        ${cleanPath}-sm.webp 800w,
+        ${cleanPath}-md.webp 1200w,
+        ${cleanPath}-lg.webp 1920w
+    `;
 }
