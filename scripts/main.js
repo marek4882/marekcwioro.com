@@ -1,6 +1,7 @@
 /* ===============================
    GLOBAL CONFIG & STATE
 =============================== */
+let heroSplideInstance = null;
 
 const CONFIG = {
   paths: {
@@ -51,6 +52,7 @@ appState.autoCloseDescriptions = true;
    INIT APP
 =============================== */
 document.addEventListener("DOMContentLoaded", initApp);
+
 function isMobile() {
   return window.matchMedia("(max-width: 768px)").matches;
 }
@@ -69,10 +71,9 @@ async function initApp() {
 
     // 2. Renderuj widoki
     renderHero(heroData);
-    initAnimations();
     renderSpecializations(appState.specializations);
-    initAnimations();
     renderPortfolio(appState.projects);
+
     initAnimations();
 
     // 3. Zainicjuj logikę (listenery, slidery)
@@ -578,21 +579,33 @@ function openLightbox(startIndex, images) {
 /* ===============================
    UTILS & UI (Slider, Animacje, Cookie)
 =============================== */
-function initHeroSlider() {
-  const splideEl = document.querySelector("#ferrari-gallery");
-  if (splideEl && typeof Splide !== "undefined") {
-    new Splide("#ferrari-gallery", {
-      type: "loop",
-      perPage: 3, // Domyślnie 3
-      gap: "1rem",
-      autoplay: true, // Warto dodać autoplay w hero
-      interval: 3000,
-      breakpoints: {
-        992: { perPage: 2 },
-        600: { perPage: 1 }, // Na telefonie 1 zdjęcie
-      },
-    }).mount();
+async function initHeroSlider() {
+  const splideEl = document.querySelector("#gallery");
+  if (!splideEl) return;
+
+  // ❗ nie inicjalizuj drugi raz
+  if (heroSplideInstance) return;
+
+  if (typeof Splide === "undefined") {
+    console.error("Splide JS not loaded");
+    return;
   }
+
+  heroSplideInstance = new Splide(splideEl, {
+    type: "loop",
+    perPage: 3,
+    gap: "1rem",
+    arrows: true,
+    pagination: true,
+    autoplay: true,
+    interval: 2000,
+    breakpoints: {
+      992: { perPage: 2 },
+      600: { perPage: 1 },
+    },
+  });
+
+  heroSplideInstance.mount();
 }
 
 function initAnimations() {
