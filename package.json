@@ -20,5 +20,9 @@
   "dependencies": {
     "glob": "^13.0.0",
     "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@cloudflare/kv-asset-handler": "^0.4.2",
+    "wrangler": "^4.60.0"
   }
 }

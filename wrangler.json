@@ -1,0 +1,29 @@
+{
+  "name": "marekcwioro-portfolio",
+  "main": "scripts/worker.js", 
+  "compatibility_date": "2024-09-23",
+  "site": {
+    "bucket": ".",
+    "exclude": [
+      "node_modules",
+      ".git",
+      ".gitignore",
+      "package.json",
+      "package-lock.json",
+      "wrangler.json",
+      "README.md",
+      "scripts/optimize-images.js",
+      "scripts/worker.js"
+    ]
+  },
+  "routes": [
+    {
+      "pattern": "marekcwioro.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.marekcwioro.com",
+      "custom_domain": true
+    }
+  ]
+}
