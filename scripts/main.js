@@ -131,7 +131,7 @@ function renderHero(data) {
         <figure class="gallery-item">
           <div class="gallery-image-container">
             <img 
-              src="${img.src.replace(".webp", "-lg.webp")}" 
+              src="${img.src.replace(".webp", "-md.webp")}" 
               srcset="${srcSet}"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1920px"
               alt="${img.alt}" 
@@ -166,7 +166,7 @@ function renderSpecializations(data) {
       (item) => `
       <div class="category-card">
         <div class="category-image">
-          <img src="${item.image}" alt="${item.title}" loading="lazy" />
+          <img src="${item.image.replace(".webp", "-sm.webp")}" alt="${item.title}" loading="lazy" />
         </div>
         <div class="category-content">
           <h3 class="category-title">${item.title}</h3>
