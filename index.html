@@ -125,11 +125,33 @@
 
       <section class="hero-section" id="home-section">
         <div class="container hero-container">
-          <div class="hero-content" id="hero-text-container"></div>
+          <div class="hero-content" id="hero-text-container">
+            <h1 class="hero-title">
+              Fotografuję momenty,<br />które trwają wiecznie
+            </h1>
+            <p class="hero-description">
+              Tworzę historie zapisane światłem, dbając o każdy detal Twojej
+              wizji. Profesjonalna fotografia motoryzacyjna, eventowa i
+              portretowa.
+            </p>
+            <a href="#realizations-section" class="hero-btn">
+              Zobacz moje prace
+            </a>
+          </div>
+
           <div class="hero-gallery">
             <div class="splide" id="gallery">
               <div class="splide__track">
-                <ul class="splide__list" id="hero-slider-list"></ul>
+                <ul class="splide__list" id="hero-slider-list">
+                  <li class="splide__slide">
+                    <img
+                      src="./assets/img/automotive/2025-06-29-ford-gt-1/2025-06-29-ford-gt-1-1-md.webp"
+                      alt="Ford GT"
+                      fetchpriority="high"
+                      loading="eager"
+                    />
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -250,8 +272,11 @@
         Akceptuję
       </button>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
     <script src="./scripts/core.js" defer></script>
     <script src="./scripts/main.js" defer></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"
+      defer
+    ></script>
   </body>
 </html>

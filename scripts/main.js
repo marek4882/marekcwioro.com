@@ -59,9 +59,12 @@ function isMobile() {
 
 async function initApp() {
   try {
-    // 1. Pobierz dane równolegle (szybciej)
-    const [heroData, specsData, projectsData] = await Promise.all([
-      fetchData(CONFIG.paths.hero),
+    // HERO — pierwszy, ASAP
+    const heroData = await fetchData(CONFIG.paths.hero);
+    renderHero(heroData);
+
+    // Reszta równolegle w tle
+    const [specsData, projectsData] = await Promise.all([
       fetchData(CONFIG.paths.specializations),
       fetchData(CONFIG.paths.realizations),
     ]);
@@ -69,24 +72,22 @@ async function initApp() {
     appState.specializations = specsData;
     appState.projects = projectsData;
 
-    // 2. Renderuj widoki
-    renderHero(heroData);
-    renderSpecializations(appState.specializations);
-    renderPortfolio(appState.projects);
+    renderSpecializations(specsData);
+    renderPortfolio(projectsData);
 
-    initAnimations();
-
-    // 3. Zainicjuj logikę (listenery, slidery)
+    // Logika UI
     setupEventListeners();
     initScrollSpy();
     checkCookies();
 
-    // Usuń klasę no-js
     document.documentElement.classList.remove("no-js");
-    initAnimations();
+
+    // Bajery na końcu
+    requestIdleCallback(() => {
+      initAnimations();
+    });
   } catch (error) {
     console.error("Critical Error initializing app:", error);
-    // Tutaj można wyświetlić użytkownikowi komunikat o błędzie na stronie
   }
 }
 
@@ -105,15 +106,6 @@ async function fetchData(url) {
 
 // NOWA FUNKCJA: Renderowanie Sekcji Głównej
 function renderHero(data) {
-  // A. Teksty (bez zmian)
-  if (CONFIG.dom.heroTextContainer) {
-    CONFIG.dom.heroTextContainer.innerHTML = `
-      <h1 class="hero-title animate">${data.title}</h1>
-      <p class="hero-description animate">${data.description}</p>
-      <a href="${data.ctaLink}" class="hero-btn animate">${data.ctaText}</a>
-    `;
-  }
-
   // B. Slider - ZMIANY TUTAJ
   if (CONFIG.dom.heroSliderList) {
     const slidesHTML = data.sliderImages
