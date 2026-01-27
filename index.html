@@ -40,17 +40,158 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <style>
+      :root {
+        --header-h: 100px;
+        --header-height: 90px;
+      }
 
+      @media (max-width: 768px) {
+        :root {
+          --header-height: 70px;
+        }
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        background: #fff;
+        color: #222;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      /* ===== HEADER ===== */
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: #fff;
+        border-bottom: 1px solid #eee;
+      }
+
+      .header__container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .header__logo img {
+        height: 55px;
+      }
+
+      /* ===== HERO ===== */
+      .hero-section {
+        min-height: calc(100vh - var(--header-h));
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      .hero-container {
+        display: flex;
+        flex-direction: column; /* Układamy tekst NAD sliderem */
+        align-items: center;
+        gap: 4rem; /* Odstęp między tekstem a galerią */
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        z-index: 2;
+        position: relative;
+      }
+
+      .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        max-width: 800px;
+        width: 100%;
+      }
+
+      .hero-title {
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        line-height: 1.1;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        letter-spacing: -0.02em;
+        color: #222;
+      }
+
+      .hero-description {
+        text-align: center;
+        color: #333;
+
+        max-width: 600px;
+        font-size: 1.125rem;
+        line-height: 1.6;
+        margin-bottom: 2.5rem;
+      }
+
+      .hero-btn {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        background: #222;
+        color: #fff;
+        padding: 1rem 2.5rem;
+        border-radius: 50px;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .hero-btn:hover {
+        transform: translateY(-2px);
+        background-color: #000;
+      }
+
+      /* HERO IMAGE CONTAINER */
+      .hero-gallery {
+        width: 100%;
+        max-width: 1200px;
+        mask-image: linear-gradient(
+          to bottom,
+          transparent,
+          black 5%,
+          black 100%
+        );
+      }
+    </style>
     <link
       rel="stylesheet"
-      type="text/css"
       href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
+      media="print"
+      onload="this.media = 'all'"
     />
 
     <link
-      rel="stylesheet"
+      rel="preload"
       href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css"
+      as="style"
+      onload="this.rel = 'stylesheet'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css"
+      />
+    </noscript>
 
     <link
       rel="preload"
@@ -145,10 +286,19 @@
                 <ul class="splide__list" id="hero-slider-list">
                   <li class="splide__slide">
                     <img
-                      src="./assets/img/automotive/2025-06-29-ford-gt-1/2025-06-29-ford-gt-1-1-md.webp"
+                      src="./assets/img/automotive/...-md.webp"
+                      srcset="
+                        ./assets/img/automotive/...-sm.webp  600w,
+                        ./assets/img/automotive/...-md.webp 1200w,
+                        ./assets/img/automotive/...-lg.webp 1800w
+                      "
+                      sizes="(max-width: 768px) 100vw, 1200px"
+                      width="1200"
+                      height="800"
                       alt="Ford GT"
                       fetchpriority="high"
                       loading="eager"
+                      decoding="async"
                     />
                   </li>
                 </ul>
