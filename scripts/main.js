@@ -104,47 +104,50 @@ async function fetchData(url) {
     RENDERING FUNCTIONS
   =============================== */
 
+// NOWA FUNKCJA: Renderowanie Sekcji Głównej
 function renderHero(data) {
-  const list = CONFIG.dom.heroSliderList;
-  if (!list || !data?.sliderImages?.length) return;
+  // B. Slider - ZMIANY TUTAJ
+  if (CONFIG.dom.heroSliderList) {
+    const slidesHTML = data.sliderImages
+      .map((img, index) => {
+        const isFirst = index === 0;
+        const priorityAttr = isFirst ? 'fetchpriority="high"' : "";
+        const loadingAttr = isFirst ? 'loading="eager"' : 'loading="lazy"';
 
-  const slidesHTML = data.sliderImages
-    .slice(1)
-    .map((img) => {
-      const srcSet = getSrcSet(img.src);
+        // Generujemy srcset na podstawie src z JSONa
+        // Zakładam, że img.src to np. "./assets/.../Obraz.webp"
+        const srcSet = getSrcSet(img.src);
 
-      return `
-        <li class="splide__slide">
-          <figure class="gallery-item">
-            <div class="gallery-image-container">
-              <img
-                src="${img.src.replace(".webp", "-md.webp")}"
-                srcset="${srcSet}"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1920px"
-                alt="${img.alt}"
-                class="gallery-image"
-                width="1365"
-                height="2048"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
+        return `
+      <li class="splide__slide">
+        <figure class="gallery-item">
+          <div class="gallery-image-container">
+            <img 
+              src="${img.src.replace(".webp", "-md.webp")}" 
+              srcset="${srcSet}"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1920px"
+              alt="${img.alt}" 
+              class="gallery-image"
+              width="1365" 
+              height="2048"
+              ${priorityAttr}
+              ${loadingAttr}
+            />
+          </div>
+          <figcaption class="photo-caption">
+            <p class="photo-caption__title">${img.caption}</p>
+            <time class="photo-caption__date">${img.date}</time>
+          </figcaption>
+        </figure>
+      </li>
+    `;
+      })
+      .join("");
 
-            <figcaption class="photo-caption">
-              <p class="photo-caption__title">${img.caption}</p>
-              <time class="photo-caption__date">${img.date}</time>
-            </figcaption>
-          </figure>
-        </li>
-      `;
-    })
-    .join("");
-
-  list.insertAdjacentHTML("beforeend", slidesHTML);
-
-  initHeroSlider();
+    CONFIG.dom.heroSliderList.innerHTML = slidesHTML;
+    initHeroSlider();
+  }
 }
-
 // Renderowanie sekcji Specjalizacji (Górna)
 function renderSpecializations(data) {
   const container = CONFIG.dom.specializationsGrid;
