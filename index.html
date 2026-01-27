@@ -192,6 +192,18 @@
         href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css"
       />
     </noscript>
+    <link
+      rel="preload"
+      as="image"
+      href="./assets/img/automotive/ford-gt-md.webp"
+      imagesrcset="
+    ./assets/img/automotive/ford-gt-xs.webp 480w,
+    ./assets/img/automotive/ford-gt-sm.webp 800w,
+    ./assets/img/automotive/ford-gt-md.webp 1200w,
+    ./assets/img/automotive/ford-gt-lg.webp 1920w
+  "
+      imagesizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1920px"
+    />
 
     <link
       rel="preload"
@@ -286,15 +298,16 @@
                 <ul class="splide__list" id="hero-slider-list">
                   <li class="splide__slide">
                     <img
-                      src="./assets/img/automotive/...-md.webp"
+                      src="./assets/img/automotive/ford-gt-md.webp"
                       srcset="
-                        ./assets/img/automotive/...-sm.webp  600w,
-                        ./assets/img/automotive/...-md.webp 1200w,
-                        ./assets/img/automotive/...-lg.webp 1800w
+                        ./assets/img/automotive/ford-gt-xs.webp  480w,
+                        ./assets/img/automotive/ford-gt-sm.webp  800w,
+                        ./assets/img/automotive/ford-gt-md.webp 1200w,
+                        ./assets/img/automotive/ford-gt-lg.webp 1920w
                       "
-                      sizes="(max-width: 768px) 100vw, 1200px"
-                      width="1200"
-                      height="800"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1920px"
+                      width="1365"
+                      height="2048"
                       alt="Ford GT"
                       fetchpriority="high"
                       loading="eager"
