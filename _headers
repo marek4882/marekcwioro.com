@@ -1,0 +1,27 @@
+# Obrazy
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+# CSS & JS
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/scripts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# JSON (możesz dać krócej, ale nie musi)
+/json/*
+  Cache-Control: public, max-age=86400
+
+# HTML – krótko
+/*.html
+  Cache-Control: public, max-age=600
