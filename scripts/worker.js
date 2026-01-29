@@ -18,7 +18,26 @@ export default {
       );
 
       const response = new Response(page.body, page);
-      response.headers.set("Cache-Control", "public, max-age=86400");
+
+      const url = new URL(request.url).pathname;
+
+      // HTML – krótki cache
+      if (url.endsWith(".html") || url === "/") {
+        response.headers.set("Cache-Control", "public, max-age=600");
+      }
+
+      // Static assets – długi cache
+      else if (url.match(/\.(webp|jpg|jpeg|png|svg|css|js)$/)) {
+        response.headers.set(
+          "Cache-Control",
+          "public, max-age=31536000, immutable",
+        );
+      }
+
+      // fallback
+      else {
+        response.headers.set("Cache-Control", "public, max-age=86400");
+      }
 
       return response;
     } catch (e) {
