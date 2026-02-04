@@ -298,10 +298,12 @@ function handleCategoryFilter(category) {
   // filtruj realizacje
   renderPortfolio(appState.projects, category);
 
-  // opcjonalnie: jeśli galeria była otwarta – zamknij ją
+  // jeśli galeria była otwarta – zamknij ją
   if (appState.isGalleryOpen) {
     returnToPortfolio();
   }
+
+  scrollToPortfolioGridMobile();
 }
 
 /* ===============================
@@ -424,6 +426,20 @@ function openProjectGallery(project) {
   });
 
   CONFIG.dom.galleryView.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function scrollToPortfolioGridMobile() {
+  if (!isMobile()) return;
+
+  const grid = CONFIG.dom.portfolioGrid;
+  if (!grid) return;
+
+  const y = grid.getBoundingClientRect().top + window.pageYOffset - 110; // offset pod header
+
+  window.scrollTo({
+    top: y,
+    behavior: "smooth",
+  });
 }
 
 function returnToPortfolio() {
