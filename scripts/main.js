@@ -59,8 +59,6 @@ function isMobile() {
 
 async function initApp() {
   try {
- 
-
     // Reszta równolegle w tle
     const [specsData, projectsData] = await Promise.all([
       fetchData(CONFIG.paths.specializations),
@@ -72,6 +70,7 @@ async function initApp() {
 
     renderSpecializations(specsData);
     renderPortfolio(projectsData);
+    initProjectPrefetch();
 
     // Logika UI
     setupEventListeners();
@@ -101,7 +100,6 @@ async function fetchData(url) {
 /* ===============================
     RENDERING FUNCTIONS
   =============================== */
-
 
 // Renderowanie sekcji Specjalizacji (Górna)
 function renderSpecializations(data) {
@@ -197,6 +195,10 @@ function renderPortfolio(projects, filter = "all") {
 
   // ✅ TU
   initDescriptionToggles();
+
+  requestAnimationFrame(() => {
+    initProjectPrefetch();
+  });
 }
 
 function initDescriptionToggles(container = document) {
@@ -662,4 +664,45 @@ function getSrcSet(pathStr, fileName = "") {
         ${cleanPath}-md.webp 1200w,
         ${cleanPath}-lg.webp 1920w
     `;
+}
+
+function prefetchProjectImages(project) {
+  if (!project?.images?.length) return;
+
+  project.images.forEach((fileName) => {
+    const cleanName = fileName.replace(/\.(webp|jpg|png|jpeg)$/i, "");
+    const fullPath = `${project.basePath}${cleanName}-lg.webp`;
+
+    const img = new Image();
+    img.src = fullPath;
+  });
+}
+
+function initProjectPrefetch() {
+  const items = document.querySelectorAll(".portfolio-item");
+
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const projectId =
+            entry.target.querySelector(".portfolio-link")?.dataset.id;
+
+          const project = appState.projects.find((p) => p.id === projectId);
+
+          if (project) {
+            prefetchProjectImages(project);
+          }
+
+          obs.unobserve(entry.target); // odpal tylko raz
+        }
+      });
+    },
+    {
+      rootMargin: "300px",
+      threshold: 0.1,
+    },
+  );
+
+  items.forEach((item) => observer.observe(item));
 }
