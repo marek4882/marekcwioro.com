@@ -13,8 +13,8 @@ const CONFIG = {
     get heroTextContainer() {
       return document.getElementById("hero-text-container");
     },
-    get heroSliderList() {
-      return document.getElementById("hero-slider-list");
+    get heroGalleryContainer() {
+      return document.getElementById("hero-static-gallery");
     },
     get portfolioGrid() {
       return document.getElementById("portfolio-grid");
@@ -59,9 +59,7 @@ function isMobile() {
 
 async function initApp() {
   try {
-    // HERO — pierwszy, ASAP
-    const heroData = await fetchData(CONFIG.paths.hero);
-    renderHero(heroData);
+ 
 
     // Reszta równolegle w tle
     const [specsData, projectsData] = await Promise.all([
@@ -104,50 +102,7 @@ async function fetchData(url) {
     RENDERING FUNCTIONS
   =============================== */
 
-// NOWA FUNKCJA: Renderowanie Sekcji Głównej
-function renderHero(data) {
-  // B. Slider - ZMIANY TUTAJ
-  if (CONFIG.dom.heroSliderList) {
-    const slidesHTML = data.sliderImages
-      .map((img, index) => {
-        const isFirst = index === 0;
-        const priorityAttr = isFirst ? 'fetchpriority="high"' : "";
-        const loadingAttr = isFirst ? 'loading="eager"' : 'loading="lazy"';
 
-        // Generujemy srcset na podstawie src z JSONa
-        // Zakładam, że img.src to np. "./assets/.../Obraz.webp"
-        const srcSet = getSrcSet(img.src);
-
-        return `
-      <li class="splide__slide">
-        <figure class="gallery-item">
-          <div class="gallery-image-container">
-            <img 
-              src="${img.src.replace(".webp", "-md.webp")}" 
-              srcset="${srcSet}"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1920px"
-              alt="${img.alt}" 
-              class="gallery-image"
-              width="1365" 
-              height="2048"
-              ${priorityAttr}
-              ${loadingAttr}
-            />
-          </div>
-          <figcaption class="photo-caption">
-            <p class="photo-caption__title">${img.caption}</p>
-            <time class="photo-caption__date">${img.date}</time>
-          </figcaption>
-        </figure>
-      </li>
-    `;
-      })
-      .join("");
-
-    CONFIG.dom.heroSliderList.innerHTML = slidesHTML;
-    initHeroSlider();
-  }
-}
 // Renderowanie sekcji Specjalizacji (Górna)
 function renderSpecializations(data) {
   const container = CONFIG.dom.specializationsGrid;

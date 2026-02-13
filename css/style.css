@@ -6,7 +6,6 @@
   }
 }
 
-
 :root {
   --header-height: 90px;
 }
@@ -137,11 +136,6 @@ section,
   .section-title {
     font-size: 28px;
   }
-}
-.container {
-  padding: 30px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .section-title {
@@ -1087,8 +1081,8 @@ ul {
   opacity: 0;
   transform: translateY(30px);
   transition:
-    opacity0.8s ease,
-    transform0.8s ease;
+    opacity 0.8s ease,
+    transform 0.8s ease;
 }
 
 .animate.in-view {
@@ -1226,5 +1220,89 @@ ul {
   }
   100% {
     transform: translateY(0px) rotate(0deg);
+  }
+}
+
+/* --- STATIC GALLERY (ZAMIENNIK SPLIDE) --- */
+
+.static-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.static-gallery-item {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.static-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Obrazek */
+.static-gallery-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.static-gallery-item:hover .static-gallery-image {
+  transform: scale(1.05);
+}
+
+/* Napisy na zdjęciu */
+.static-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 40px 20px 20px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  color: white;
+  pointer-events: none;
+}
+
+/* --- RESPONSYWNOŚĆ (MOBILE) --- */
+@media (max-width: 992px) {
+  .static-gallery-grid {
+    display: flex;
+    flex: 1;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 15px;
+    padding-bottom: 20px; /* Miejsce na pasek przewijania */
+
+    /* Ukrywanie paska przewijania (opcjonalne) */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .static-gallery-grid::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+
+  .static-gallery-item {
+    /* Na mobile zdjęcie ma stałą szerokość, np. 85% ekranu */
+    flex: 0 0 85%;
+    scroll-snap-align: center; /* Karta centruje się po przewinięciu */
+  }
+
+  /* Pierwszy element musi mieć margines, żeby nie przylegał do krawędzi */
+  .static-gallery-item:first-child {
+    margin-left: 10px;
+  }
+  .static-gallery-item:last-child {
+    margin-right: 10px;
   }
 }

@@ -70,8 +70,6 @@
       }
 
       img {
-        display: block;
-        width: 100%;
         height: auto;
       }
 
@@ -173,6 +171,46 @@
           black 100%
         );
       }
+
+      .animate {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      /* Loading state dla obrazków */
+      .static-gallery-item,
+      .portfolio-image,
+      .category-image {
+        background-color: #f0f0f0;
+      }
+
+      /* Podstawowe style dla sekcji (aby nie "skakały") */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px 20px;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 1rem;
+        font-size: 2rem;
+        font-weight: 300;
+        color: #222;
+      }
+
+      /* Grid layout (zapobiega CLS) */
+      .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+      }
+
+      .portfolio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 30px;
+      }
     </style>
     <link
       rel="stylesheet"
@@ -182,23 +220,10 @@
     />
 
     <link
-      rel="preload"
-      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css"
-      as="style"
-      onload="this.rel = 'stylesheet'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css"
-      />
-    </noscript>
-
-    <link
-      rel="preload"
+      rel="stylesheet"
       href="./css/style.css"
-      as="style"
-      onload="this.rel = 'stylesheet'"
+      media="print"
+      onload="this.media = 'all'"
     />
     <noscript><link rel="stylesheet" href="./css/style.css" /></noscript>
 
@@ -208,8 +233,10 @@
         "@type": "PhotographyBusiness",
         "name": "Marek Ćwioro - Fotografia Kraków",
         "logo": "https://marekcwioro.com/assets/logo.svg",
-        "image": "https://marekcwioro.com/assets/social-share.jpg"
+        "image": "https://marekcwioro.com/assets/social-share.jpg",
         "url": "https://marekcwioro.com/",
+        "telephone": "+48XXXXXXXXX",
+        "email": "mailto:marekfoto02@gmail.com",
         "priceRange": "PLN",
         "address": {
           "@type": "PostalAddress",
@@ -281,14 +308,76 @@
               Zobacz moje prace
             </a>
           </div>
-
           <div class="hero-gallery">
-            <div class="splide" id="gallery">
-              <div class="splide__track">
-                <ul class="splide__list" id="hero-slider-list">
-                  <li class="splide__slide"></li>
-                </ul>
-              </div>
+            <div class="static-gallery-grid">
+              <!-- LCP IMAGE (najważniejszy) -->
+              <figure class="static-gallery-item">
+                <img
+                  src="./assets/img/automotive/2025-06-29-ford-gt-1/2025-06-29-ford-gt-1-1.webp"
+                  srcset="
+                    ./assets/img/automotive/2025-06-29-ford-gt-1/2025-06-29-ford-gt-1-1-xs.webp  480w,
+                    ./assets/img/automotive/2025-06-29-ford-gt-1/2025-06-29-ford-gt-1-1-sm.webp  800w,
+                    ./assets/img/automotive/2025-06-29-ford-gt-1/2025-06-29-ford-gt-1-1-md.webp 1200w,
+                    ./assets/img/automotive/2025-06-29-ford-gt-1/2025-06-29-ford-gt-1-1-lg.webp 1920w
+                  "
+                  sizes="(max-width: 768px) 85vw, 33vw"
+                  width="600"
+                  height="900"
+                  alt="Ford GT 1"
+                  fetchpriority="high"
+                  loading="eager"
+                  decoding="async"
+                />
+                <figcaption class="static-caption">
+                  <h3>Ford GT 1</h3>
+                  <time>29.06.2025</time>
+                </figcaption>
+              </figure>
+
+              <!-- Kolejne zdjęcia -->
+              <figure class="static-gallery-item">
+                <img
+                  src="./assets/img/automotive/2025-08-10-speedland/2025-08-10-speedland-1.webp"
+                  srcset="
+                    ./assets/img/automotive/2025-08-10-speedland/2025-08-10-speedland-1-xs.webp  480w,
+                    ./assets/img/automotive/2025-08-10-speedland/2025-08-10-speedland-1-sm.webp  800w,
+                    ./assets/img/automotive/2025-08-10-speedland/2025-08-10-speedland-1-md.webp 1200w,
+                    ./assets/img/automotive/2025-08-10-speedland/2025-08-10-speedland-1-lg.webp 1920w
+                  "
+                  sizes="(max-width: 768px) 85vw, 33vw"
+                  width="600"
+                  height="900"
+                  alt="Nissan GTR"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="static-caption">
+                  <h3>Nissan GTR</h3>
+                  <time>10.07.2025</time>
+                </figcaption>
+              </figure>
+
+              <figure class="static-gallery-item">
+                <img
+                  src="./assets/img/automotive/2025-06-29-ultrace/2025-06-29-ultrace-1.webp"
+                  srcset="
+                    ./assets/img/automotive/2025-06-29-ultrace/2025-06-29-ultrace-1-xs.webp  480w,
+                    ./assets/img/automotive/2025-06-29-ultrace/2025-06-29-ultrace-1-sm.webp  800w,
+                    ./assets/img/automotive/2025-06-29-ultrace/2025-06-29-ultrace-1-md.webp 1200w,
+                    ./assets/img/automotive/2025-06-29-ultrace/2025-06-29-ultrace-1-lg.webp 1920w
+                  "
+                  sizes="(max-width: 768px) 85vw, 33vw"
+                  width="600"
+                  height="900"
+                  alt="Fotografia portretowa – Kraków"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="static-caption">
+                  <h3>Chevrolet Corvette C8</h3>
+                  <time>29.06.2025</time>
+                </figcaption>
+              </figure>
             </div>
           </div>
         </div>
@@ -410,9 +499,5 @@
     </div>
     <script src="./scripts/core.js" defer></script>
     <script src="./scripts/main.js" defer></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"
-      defer
-    ></script>
   </body>
 </html>
