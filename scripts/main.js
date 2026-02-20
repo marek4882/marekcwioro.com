@@ -35,7 +35,7 @@ const CONFIG = {
       return document.getElementById("back-to-projects");
     },
     get realizationsSection() {
-      return document.getElementById("realizations-section");
+      return document.getElementById("realizacje");
     },
   },
 };
