@@ -6,6 +6,17 @@
   }
 }
 
+.gallery-image,
+.portfolio-image img,
+.category-image img,
+.gallery-item,
+.portfolio-item,
+.category-card {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
 :root {
   --header-height: 90px;
 }
@@ -19,6 +30,7 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 h1 {
@@ -116,7 +128,9 @@ section,
   text-decoration: none;
   font-weight: 500;
   letter-spacing: 1px;
-  transition: all 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
   border: none;
   cursor: pointer;
   font-size: 14px;
@@ -170,7 +184,9 @@ section,
   margin: 5px;
   border-radius: 30px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .filter-btn:hover,
@@ -439,7 +455,9 @@ section,
   border-radius: 8px;
   box-shadow: 0px 4px rgba(128, 128, 128, 0.247);
   margin-bottom: 3rem;
-  transition: all 0.5s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 .contact-container:hover {
   box-shadow: 0px 4px 1px 3px rgba(128, 128, 128, 0.9);
@@ -744,7 +762,9 @@ ul {
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  transition: all 0.3s;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .collapsible--expanded .collapsible__chevron {
@@ -927,7 +947,9 @@ ul {
   cursor: pointer;
   padding: 10px;
   border-radius: 50%;
-  transition: all 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -937,15 +959,28 @@ ul {
   z-index: 10001;
   outline: none; /* Focus będzie obsłużony stylem poniżej */
 }
+.lb-btn:hover {
+  transform: scale(1.1);
+}
 
 .lb-btn:hover,
 .lb-btn:focus {
   background: rgba(255, 255, 255, 0.3);
-  transform: scale(1.1);
 }
 
 .lb-btn:focus {
   box-shadow: 0 0 0 2px #fff;
+}
+
+/* ACTIVE (kliknięcie) */
+.lb-btn:active {
+  border-color: #fff;
+}
+
+/* ACCESSIBILITY */
+.lb-btn:focus-visible {
+  border-color: #fff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
 }
 
 .lb-close {
@@ -978,6 +1013,12 @@ ul {
   pointer-events: none;
 }
 
+/* Klasa symulująca wciśnięcie przycisku z klawiatury */
+.lb-btn.keyboard-active {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: #fff;
+  transition: all 0.1s ease; /* Szybsza animacja dla responsywności klawiatury */
+}
 /* Dostosowanie do mobilnych (przyciski na krawędziach ekranu) */
 @media (max-width: 768px) {
   .lb-prev {
@@ -1166,7 +1207,9 @@ ul {
   padding: 12px 24px;
   text-decoration: none;
   border-radius: 4px;
-  transition: all 0.3s;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .btn-secondary:hover {

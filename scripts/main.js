@@ -468,12 +468,11 @@ function openLightbox(startIndex, images) {
     imgEl.src = images[currentIndex];
     updateCounter();
   };
-
   // 4. Funkcja zamykająca (sprząta eventy i usuwa element)
   function closeLb() {
     document.removeEventListener("keydown", handleKeydown);
+    document.removeEventListener("keyup", handleKeyup); // <-- DODANA LINIJKA
     lb.remove();
-    // Opcjonalnie: przywróć focus na element, który otworzył galerię (jeśli masz do niego referencję)
   }
 
   // 5. Obsługa zdarzeń (Mysz)
@@ -497,12 +496,39 @@ function openLightbox(startIndex, images) {
   });
 
   // 6. Obsługa Klawiatury (WCAG)
+
+  // Co się dzieje, gdy WCIŚNIEMY klawisz
   const handleKeydown = (e) => {
-    if (e.key === "Escape") closeLb();
-    if (e.key === "ArrowLeft") showImage(currentIndex - 1);
-    if (e.key === "ArrowRight") showImage(currentIndex + 1);
+    if (e.key === "Escape") {
+      closeBtn.classList.add("keyboard-active");
+      // Dajemy delikatne opóźnienie, by zdążyć zobaczyć animację przed zniknięciem modala
+      setTimeout(() => closeLb(), 100);
+    }
+
+    if (e.key === "ArrowLeft") {
+      prevBtn.classList.add("keyboard-active");
+      showImage(currentIndex - 1);
+    }
+
+    if (e.key === "ArrowRight") {
+      nextBtn.classList.add("keyboard-active");
+      showImage(currentIndex + 1);
+    }
   };
+
+  // Co się dzieje, gdy PUŚCIMY klawisz
+  const handleKeyup = (e) => {
+    if (e.key === "ArrowLeft") {
+      prevBtn.classList.remove("keyboard-active");
+    }
+    if (e.key === "ArrowRight") {
+      nextBtn.classList.remove("keyboard-active");
+    }
+  };
+
+  // Dodajemy nasłuchiwanie na oba zdarzenia
   document.addEventListener("keydown", handleKeydown);
+  document.addEventListener("keyup", handleKeyup);
 
   // 7. Focus trap (Dla dostępności)
   closeBtn.focus();
@@ -600,25 +626,59 @@ function initAnimations() {
 }
 
 function checkCookies() {
-  /* ===== COOKIES ===== */
   const cookieBanner = document.getElementById("cookie-banner");
   const acceptBtn = document.getElementById("accept-cookies");
+  const rejectBtn = document.getElementById("reject-cookies"); // Nowy przycisk
 
-  // Sprawdź czy użytkownik już zaakceptował
-  if (!localStorage.getItem("cookiesAccepted")) {
+  // Sprawdzamy, czy użytkownik podjął już decyzję
+  const consentStatus = localStorage.getItem("cookiesConsent");
+
+  if (!consentStatus) {
+    // Jeśli nie, pokazujemy baner z opóźnieniem
     setTimeout(() => {
       cookieBanner.classList.add("show");
-    }, 2000); // Pokaż po 2 sekundach
-  } else {
-    cookieBanner.style.display = "none"; // Ukryj całkowicie jeśli zaakceptowane
+    }, 2000);
+  } else if (consentStatus === "accepted") {
+    // Jeśli wcześniej zaakceptował, ładujemy GA4 od razu!
+    loadGA4();
   }
 
+  // Kliknięcie "Akceptuję"
   acceptBtn.addEventListener("click", () => {
-    localStorage.setItem("cookiesAccepted", "true");
+    localStorage.setItem("cookiesConsent", "accepted");
     cookieBanner.classList.remove("show");
+    loadGA4(); // Odpalamy śledzenie
+  });
+
+  // Kliknięcie "Odrzucam"
+  rejectBtn.addEventListener("click", () => {
+    localStorage.setItem("cookiesConsent", "rejected");
+    cookieBanner.classList.remove("show");
+    // Nie wywołujemy loadGA4()
   });
 }
 
+// Funkcja odpowiedzialna za wczytanie Google Analytics 4
+function loadGA4() {
+  // UWAGA: Zmień 'G-XXXXXXXXXX' na Twój własny identyfikator pomiaru z GA4
+  const gaId = "G-PVKBFERBHJ";
+
+  // Tworzymy skrypt Google w locie
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+  document.head.appendChild(script);
+
+  // Inicjalizujemy ustawienia
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+  gtag("config", gaId);
+
+  console.log("GA4 zostało załadowane (zgoda udzielona).");
+}
 function initScrollSpy() {
   const sections = document.querySelectorAll("section[id]");
   const navLinks = document.querySelectorAll(".header__nav a");

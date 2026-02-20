@@ -68,9 +68,10 @@
         background: #fff;
         color: #222;
       }
-
       img {
+        max-width: 100%;
         height: auto;
+        display: block;
       }
 
       /* ===== HEADER ===== */
@@ -97,7 +98,6 @@
 
       /* ===== HERO ===== */
       .hero-section {
-        min-height: calc(100vh - var(--header-h));
         display: flex;
         align-items: center;
         overflow: hidden;
@@ -480,6 +480,10 @@
             &copy; <span id="current-year">2026</span> Marek Ćwioro - Fotografia
             Kraków. Wszelkie prawa zastrzeżone.
           </p>
+          <div class="footer-links">
+            <a href="./polityka-prywatnosci.html">Polityka Prywatności</a>
+            <a href="./regulamin.html">Regulamin</a>
+          </div>
         </div>
       </footer>
     </main>
@@ -487,15 +491,34 @@
     <div id="cookie-banner" class="cookie-banner">
       <p>
         Ta strona korzysta z plików cookies w celu zapewnienia najlepszej
-        jakości usług. <a href="#">Dowiedz się więcej</a>.
+        jakości usług.
+        <a
+          href="./polityka-prywatnosci.html"
+          style="color: #444; text-decoration: underline; font-weight: 500"
+          >Dowiedz się więcej</a
+        >.
       </p>
-      <button
-        id="accept-cookies"
-        class="category-btn"
-        style="padding: 8px 20px; font-size: 12px"
-      >
-        Akceptuję
-      </button>
+      <div style="display: flex; gap: 10px">
+        <button
+          id="reject-cookies"
+          class="category-btn"
+          style="
+            padding: 8px 20px;
+            font-size: 12px;
+            background: #666;
+            color: white;
+          "
+        >
+          Odrzucam
+        </button>
+        <button
+          id="accept-cookies"
+          class="category-btn"
+          style="padding: 8px 20px; font-size: 12px"
+        >
+          Akceptuję
+        </button>
+      </div>
     </div>
     <script src="./scripts/core.js" defer></script>
     <script src="./scripts/main.js" defer></script>
