@@ -109,14 +109,14 @@ function renderSpecializations(data) {
   container.innerHTML = data
     .map(
       (item) => `
-      <div class="category-card">
+      <div class="category-card" data-category="${item.id}">
         <div class="category-image">
           <img src="${item.image.replace(".webp", "-sm.webp")}" alt="${item.title}" loading="lazy" />
         </div>
         <div class="category-content">
           <h3 class="category-title">${item.title}</h3>
           <p class="category-description">${item.description}</p>
-          <button class="category-btn" data-category="${item.id}">
+          <button class="category-btn">
             ${item.btnText || "Wybierz"}
           </button>
         </div>
@@ -195,7 +195,6 @@ function renderPortfolio(projects, filter = "all") {
 
   // ✅ TU
   initDescriptionToggles();
-
   requestAnimationFrame(() => {
     initProjectPrefetch();
   });
@@ -268,43 +267,65 @@ function handleCategoryFilter(category) {
   =============================== */
 
 function setupEventListeners() {
-  // 1. Kliknięcia w Portfolio (Otwieranie projektu)
+  // 1. Kliknięcia w Realizacje (Cała karta)
   CONFIG.dom.portfolioGrid.addEventListener("click", (e) => {
-    const link = e.target.closest(".portfolio-link");
+    // Szukamy najbliższego elementu karty
+    const card = e.target.closest(".portfolio-item");
+    if (!card) return;
+
+    // ZABLOKOWANIE: Jeśli kliknięto w przycisk "Rozwiń opis", nie otwieraj galerii
+    if (e.target.closest(".desc-toggle")) return;
+
+    // Jeśli kliknięto dokładnie w link, zapobiegamy domyślnej akcji (np. skokowi do #)
+    const linkClicked = e.target.closest(".portfolio-link");
+    if (linkClicked) {
+      e.preventDefault();
+    }
+
+    // Ignorujemy, jeśli użytkownik tylko zaznacza tekst myszką
+    if (window.getSelection().toString()) return;
+
+    const link = card.querySelector(".portfolio-link");
     if (!link) return;
-    e.preventDefault();
 
     const project = appState.projects.find((p) => p.id === link.dataset.id);
     if (project) openProjectGallery(project);
   });
 
-  // 2. Kliknięcia w Specjalizacje (Filtrowanie) - Event Delegation
+  // 2. Kliknięcia w Specjalizacje (Cała karta)
   CONFIG.dom.specializationsGrid.addEventListener("click", (e) => {
-    if (e.target.classList.contains("category-btn")) {
-      const category = e.target.dataset.category;
+    // Szukamy najbliższej karty specjalizacji
+    const card = e.target.closest(".category-card");
+    if (!card) return;
 
-      handleCategoryFilter(category);
+    // Pobieramy kategorię z atrybutu data-category całej karty
+    const category = card.dataset.category;
 
-      // Active states
-      CONFIG.dom.specializationsGrid
-        .querySelectorAll(".category-btn")
-        .forEach((btn) => btn.classList.remove("active"));
-      e.target.classList.add("active");
+    handleCategoryFilter(category);
 
-      document.querySelectorAll(".filter-btn").forEach((btn) => {
-        btn.classList.toggle("active", btn.dataset.filter === category);
+    // Czyszczenie i nadawanie stanu 'active' na przyciskach wewnątrz kart
+    CONFIG.dom.specializationsGrid
+      .querySelectorAll(".category-btn")
+      .forEach((btn) => btn.classList.remove("active"));
+
+    // Znajdź przycisk w klikniętej karcie i dodaj mu klasę active
+    const btnInside = card.querySelector(".category-btn");
+    if (btnInside) btnInside.classList.add("active");
+
+    // Aktualizacja filtrów w innym miejscu (jeśli istnieją)
+    document.querySelectorAll(".filter-btn").forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.filter === category);
+    });
+
+    // Płynny scroll do sekcji
+    const section = CONFIG.dom.realizationsSection;
+    if (section) {
+      const y = section.getBoundingClientRect().top + window.pageYOffset - 80;
+
+      window.scrollTo({
+        top: y,
+        behavior: "smooth",
       });
-
-      // ✅ PEWNY SCROLL
-      const section = CONFIG.dom.realizationsSection;
-      if (section) {
-        const y = section.getBoundingClientRect().top + window.pageYOffset - 80;
-
-        window.scrollTo({
-          top: y,
-          behavior: "smooth",
-        });
-      }
     }
   });
 
@@ -354,8 +375,11 @@ function openProjectGallery(project) {
   CONFIG.dom.portfolioGrid.style.display = "none";
   CONFIG.dom.galleryView.style.display = "block";
   CONFIG.dom.projectTitle.textContent = project.title;
-  CONFIG.dom.galleryContainer.innerHTML = "";
-
+  CONFIG.dom.galleryContainer.innerHTML = `
+    <div class="masonry-col" id="col-0"></div>
+    <div class="masonry-col" id="col-1"></div>
+    <div class="masonry-col" id="col-2"></div>
+  `;
   // 1. Tablica do Lightboxa - używamy wersji LARGE (-lg.webp) dla jakości
   const lightboxImages = project.images.map((fileName) => {
     const cleanName = fileName.replace(/\.(webp|jpg|png|jpeg)$/i, "");
@@ -363,23 +387,18 @@ function openProjectGallery(project) {
   });
 
   project.images.forEach((fileName, index) => {
-    // 2. Miniatury na stronie - responsywne
     const img = document.createElement("img");
-    // Src fallback
     img.src = (project.basePath + fileName).replace(".webp", "-lg.webp");
-    // Srcset dla wydajności
     img.srcset = getSrcSet(project.basePath, fileName);
-    // Sizes: Galeria to pewnie siatka, np. 3 kolumny
     img.sizes = "(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw";
-
     img.alt = `${project.title} - zdjęcie ${index + 1}`;
     img.className = "gallery-detail-image";
     img.loading = "lazy";
-
-    // Kliknięcie otwiera lightbox z wersjami -lg
     img.addEventListener("click", () => openLightbox(index, lightboxImages));
 
-    CONFIG.dom.galleryContainer.appendChild(img);
+    // Dystrybuuj zdjęcia do kolumn równomiernie
+    const colIndex = index % 3;
+    document.getElementById(`col-${colIndex}`).appendChild(img);
   });
 
   CONFIG.dom.galleryView.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -411,6 +430,7 @@ function returnToPortfolio() {
 
 /* ===== LIGHTBOX Z NAWIGACJĄ (WCAG) - WERSJA FINALNA ===== */
 function openLightbox(startIndex, images) {
+  document.body.style.overflow = "hidden";
   let currentIndex = startIndex;
 
   // 1. Struktura HTML
@@ -470,6 +490,7 @@ function openLightbox(startIndex, images) {
   };
   // 4. Funkcja zamykająca (sprząta eventy i usuwa element)
   function closeLb() {
+    document.body.style.overflow = "";
     document.removeEventListener("keydown", handleKeydown);
     document.removeEventListener("keyup", handleKeyup); // <-- DODANA LINIJKA
     lb.remove();
