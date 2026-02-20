@@ -700,32 +700,50 @@ function loadGA4() {
 
   console.log("GA4 zostało załadowane (zgoda udzielona).");
 }
+
 function initScrollSpy() {
   const sections = document.querySelectorAll("section[id]");
   const navLinks = document.querySelectorAll(".header__nav a");
 
   if (!sections.length || !navLinks.length) return;
 
-  const spyObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          navLinks.forEach((link) => {
-            const targetId = link.getAttribute("href")?.replace("#", "");
-            link.classList.toggle("active", targetId === entry.target.id);
-          });
+  const headerHeight = document.querySelector(".header")?.offsetHeight ?? 90;
+
+  const setActive = (id) => {
+    navLinks.forEach((link) => {
+      const targetId = link.getAttribute("href")?.replace("#", "");
+      link.classList.toggle("active", targetId === id);
+    });
+  };
+
+  const onScroll = () => {
+    let bestId = "";
+    let bestDistance = Infinity;
+
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      const top = rect.top - headerHeight;
+
+      if (top <= 50) {
+        const distance = Math.abs(top);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestId = section.id;
         }
-      });
-    },
-    {
-      rootMargin: "-40% 0px -40% 0px",
-      threshold: 0,
-    },
-  );
+      }
+    });
 
-  sections.forEach((section) => spyObserver.observe(section));
+    if (bestId) setActive(bestId);
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  // Obsługa resize i zoom
+  window.addEventListener("resize", onScroll, { passive: true });
+
+  // Uruchom od razu
+  onScroll();
 }
-
 /**
  * Generuje string srcset dla plików WebP wygenerowanych przez skrypt
  * @param {string} basePath - np. "./assets/img/auto/"
