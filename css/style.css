@@ -1138,6 +1138,13 @@ body.menu-open {
   font-size: 14px;
 }
 
+@media (max-width: 600px) {
+  .cookie-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
 .animate {
   opacity: 0;
   transform: translateY(30px);
