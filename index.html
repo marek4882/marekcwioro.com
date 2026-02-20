@@ -68,8 +68,9 @@
         background: #fff;
         color: #222;
       }
+      
       img {
-        max-width: 100%;
+        width: 100%;
         height: auto;
         display: block;
       }
@@ -160,7 +161,9 @@
         background-color: #000;
       }
 
-      /* HERO IMAGE CONTAINER */
+      /* ===============================
+   HERO GALLERY — NAPRAWIONE
+=============================== */
       .hero-gallery {
         width: 100%;
         max-width: 1200px;
@@ -172,16 +175,81 @@
         );
       }
 
-      .animate {
-        opacity: 0;
-        transform: translateY(30px);
+      .static-gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* zawsze 3 równe kolumny */
+        gap: 16px;
+        align-items: stretch; /* karty tej samej wysokości */
       }
 
-      /* Loading state dla obrazków */
-      .static-gallery-item,
-      .portfolio-image,
-      .category-image {
-        background-color: #f0f0f0;
+      .static-gallery-item {
+        position: relative;
+        aspect-ratio: 2 / 3; /* stały proporcja dla wszystkich kart */
+        overflow: hidden;
+        border-radius: 12px;
+        margin: 0; /* reset figure margin */
+      }
+
+      .static-gallery-item img {
+        position: absolute; /* wypełnij cały kontener */
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* przytnij bez deformacji */
+        object-position: center;
+        transition: transform 0.5s ease;
+        display: block;
+      }
+
+      .static-gallery-item:hover img {
+        transform: scale(1.05);
+      }
+
+      /* Gradient + caption */
+      .static-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 40px 16px 16px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
+        color: white;
+        pointer-events: none;
+        border-radius: 0 0 12px 12px;
+      }
+
+      .static-caption span {
+        font-size: 1rem;
+        font-weight: 600;
+        margin: 0 0 4px;
+      }
+
+      .static-caption time {
+        opacity: 0.75;
+      }
+
+      /* ===============================
+   RESPONSYWNOŚĆ
+=============================== */
+      @media (max-width: 768px) {
+        .static-gallery-grid {
+          display: flex;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          gap: 12px;
+          padding-bottom: 12px;
+          scrollbar-width: none;
+        }
+
+        .static-gallery-grid::-webkit-scrollbar {
+          display: none;
+        }
+
+        .static-gallery-item {
+          flex: 0 0 80vw; /* 80% szerokości ekranu */
+          aspect-ratio: 2 / 3;
+          scroll-snap-align: center;
+        }
       }
 
       /* Podstawowe style dla sekcji (aby nie "skakały") */
@@ -327,7 +395,7 @@
                   decoding="async"
                 />
                 <figcaption class="static-caption">
-                  <h3>Ford GT 1</h3>
+                  <span>Ford GT 1</span>
                   <time>29.06.2025</time>
                 </figcaption>
               </figure>
@@ -350,7 +418,7 @@
                   decoding="async"
                 />
                 <figcaption class="static-caption">
-                  <h3>Nissan GTR</h3>
+                  <span>Nissan GTR</span>
                   <time>10.07.2025</time>
                 </figcaption>
               </figure>
@@ -372,7 +440,7 @@
                   decoding="async"
                 />
                 <figcaption class="static-caption">
-                  <h3>Chevrolet Corvette C8</h3>
+                  <span>Chevrolet Corvette C8</span>
                   <time>29.06.2025</time>
                 </figcaption>
               </figure>
